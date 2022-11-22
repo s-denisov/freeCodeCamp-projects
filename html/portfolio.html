@@ -1,0 +1,74 @@
+<html>
+
+<style>
+
+body {
+  background-color: #0B0C10;
+  color: #66FCF1;
+}
+
+a {
+  color: #45A29E;
+}
+
+a:hover {
+  color: white;
+}
+
+#welcome-section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #1F2833;
+}
+
+#navbar {
+  display: flex;
+  align-vertical: center;
+  position: fixed;
+  line-height: 30px;
+  background-color: #0C0032;
+  width: 100%;
+  height: 30px;
+  left: 0;
+  top: 0;
+  padding-left: 20px;
+}
+
+#navbar > a {
+  text-decoration: none;
+}
+
+@media (max-width: 500px) {
+  #navbar {
+    left: 0;
+    top: 0;
+  }
+}
+</style>
+
+<body>
+
+<script src="../bundle.js"></script>
+
+<nav id="navbar">
+  <a href="#projects">My projects</a>
+</nav>
+
+<div id="welcome-section">
+  <h1>Welcome!</h1>
+  <p>Check out <a id="profile-link" href="https://github.com/s-denisov" target="_blank">my Github account</a></p>
+</div>
+
+<div id="projects">
+  <h2>My projects</h2>
+  <div class="project-tile">
+    <a href="./survey.html">Survey</a>
+  </div>
+
+
+</body>
+
+</html>

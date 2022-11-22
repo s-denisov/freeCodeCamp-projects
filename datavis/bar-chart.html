@@ -1,0 +1,74 @@
+<body>
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script>
+    const req = new XMLHttpRequest();
+    req.open("GET", "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json", true);
+    req.send();
+    req.onload = () => {
+      const w = 900;
+      const h = 1000;
+      const padding = 100;
+      const dataset = JSON.parse(req.responseText).data
+
+      const xScale = d3.scaleTime()
+        .domain([new Date(1947, 0), new Date(2016, 0)])
+        .range([padding, w - padding]);
+      const xAxis = d3.axisBottom(xScale);
+
+      const yScale = d3.scaleLinear()
+        .domain([d3.max(dataset, d => d[1]), 0])
+        .range([padding, h - padding]);
+      const yAxis = d3.axisLeft(yScale);
+
+      const svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+      svg.append("text")
+        .attr("x", 400)
+        .attr("y", 70)
+        .attr("id", "title")
+        .style("font-size", "16px")
+        .text("USA GDP");
+
+      svg.append("g")
+        .attr("id", "x-axis")
+        .attr("transform", `translate(0, ${h - padding})`)
+        .call(xAxis);
+      
+      svg.append("g")
+        .attr("id", "y-axis")
+        .attr("transform", `translate(${padding}, 0)`)
+        .call(yAxis);
+
+      const tooltip = svg
+        .append("text")
+        .attr("id", "tooltip")
+        .attr("x", 400)
+        .attr("y", 180)
+        .style("position", "absolute")
+        .style("visibility", "hidden")
+
+      svg.selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("x", d => xScale(new Date(d[0])))
+        .attr("y", d => yScale(d[1]))
+        .attr("width", 1)
+        .attr("height", d => h - padding - yScale(d[1]))
+        .attr("fill", "blue")
+        .attr("class", "bar")
+        .attr("data-date", d => d[0])
+        .attr("data-gdp", d => d[1])
+        .on("mouseover", d => tooltip
+          .attr("data-date", d[0])
+          .style("visibility", "visible")
+          .text(d[0] + " " + d[1]))
+        .on("mouseout", () => tooltip.style("visibility", "hidden"))
+    };
+  </script>
+</body>

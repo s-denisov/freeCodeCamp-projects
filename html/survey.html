@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+
+<style>
+
+.double {
+  display: grid;
+  grid-template-columns: 100px 300px;
+  align-items: center;
+  grid-gap: 20px;
+}
+
+.single {
+  display: grid;
+  grid-template-columns: 400px;
+  grid-gap: 20px;
+}
+
+body {
+  font-family: "Sans Serif";
+}
+
+textarea {
+  font-family: "Sans Serif";
+}
+
+</style>
+
+<body>
+  <script src="../bundle.js"></script>
+
+  <h1 id="title">Subscribe</h1>
+  <p id="description">Subscribe to our blog by filling in the form bellow:</p>
+  <form id="survey-form">
+    <div id="double-grid" class="double">
+      <label id="name-label" for="name">Your name:</label>
+      <input id="name" type="text" placeholder="John Doe" required>
+      <label id="email-label" for="email">Your email:</label>
+      <input id="email" type="email" placeholder="jdoe@email.com" required>
+      <label id="number-label" for="age">Your age:</label>
+      <input id="number" type="number" placeholder=42 min=0 max=120>
+      <label for="dropdown">Your level:</label>
+      <select id="dropdown">
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="expert">Expert</option>
+      </select>
+    </div>
+    <br>
+    <div id="single-grid" class="single">
+      <fieldset class="double">
+        <legend>How do you find our site?</legend>
+        <input id="good" type="radio" name="review" value="good">
+        <label for="good">Good</label>
+        <input id="okay" type="radio" name="review" value="okay" checked>
+        <label for="okay">Okay</label>
+        <input id="bad" type="radio" name="review" value="bad">
+        <label for="bad">Bad</label>
+      </fieldset>
+      <fieldset class="double">
+        <legend>What type of content do you want to receive?</legend>
+          <input id="articles" type="checkbox" name="content" value="articles" checked>
+          <label for="articles">Articles</label>
+          <input id="news" type="checkbox" name="content" value="news" checked>
+          <label for="news">News</label>
+          <input id="discussions" type="checkbox" name="content" value="discussions" checked>
+          <label for="discussions">Discussions</label>
+          <input id="special-offers" type="checkbox" name="content" value="offers" checked>
+          <label for="special-offers">Special offers</label>
+      </fieldset>
+      <textarea rows="4" cols="100" placeholder="Additional comments"></textarea>
+      <button id="submit" type="submit">Submit</button>
+    </div>
+  </form>
+</body>
+
+
+</html>

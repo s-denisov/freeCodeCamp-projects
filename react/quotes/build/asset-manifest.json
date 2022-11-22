@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.js": "/freeCodeCamp-projects/react/quotes/build/static/js/main.bdede620.chunk.js",
+    "main.js.map": "/freeCodeCamp-projects/react/quotes/build/static/js/main.bdede620.chunk.js.map",
+    "runtime~main.js": "/freeCodeCamp-projects/react/quotes/build/static/js/runtime~main.2021ae21.js",
+    "runtime~main.js.map": "/freeCodeCamp-projects/react/quotes/build/static/js/runtime~main.2021ae21.js.map",
+    "static/css/2.22a7d4ef.chunk.css": "/freeCodeCamp-projects/react/quotes/build/static/css/2.22a7d4ef.chunk.css",
+    "static/js/2.2791c617.chunk.js": "/freeCodeCamp-projects/react/quotes/build/static/js/2.2791c617.chunk.js",
+    "static/js/2.2791c617.chunk.js.map": "/freeCodeCamp-projects/react/quotes/build/static/js/2.2791c617.chunk.js.map",
+    "index.html": "/freeCodeCamp-projects/react/quotes/build/index.html",
+    "precache-manifest.bfd85c8a23e5c328bc28b9658a441b8e.js": "/freeCodeCamp-projects/react/quotes/build/precache-manifest.bfd85c8a23e5c328bc28b9658a441b8e.js",
+    "service-worker.js": "/freeCodeCamp-projects/react/quotes/build/service-worker.js",
+    "static/css/2.22a7d4ef.chunk.css.map": "/freeCodeCamp-projects/react/quotes/build/static/css/2.22a7d4ef.chunk.css.map"
+  }
+}

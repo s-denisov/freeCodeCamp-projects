@@ -1,0 +1,88 @@
+<body>
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://unpkg.com/topojson@3"></script>
+  <script>
+    const w = 1000;
+    const h = 1000;
+    const svg = d3
+      .select("body")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h);
+  
+    svg.append("text")
+      .attr("id", "title")
+      .attr("x", 270)
+      .attr("y", 30)
+      .style("font-size", 30)
+      .style("font-weight", "bold")
+      .text("United States Educational Attainment")
+
+    const colorScheme = d3.interpolatePuBu;
+    const countriesUrl = "https://raw.githubusercontent.com/no-stack-dub-sack/testable-projects-fcc/master/src/data/choropleth_map/counties.json";
+    const educationUrl = "https://raw.githubusercontent.com/no-stack-dub-sack/testable-projects-fcc/master/src/data/choropleth_map/for_user_education.json";
+
+    const countries = d3.json(countriesUrl);
+    const education = d3.json(educationUrl);
+
+    const tooltip = d3.select("body")
+      .append("div")
+      .attr("id", "tooltip")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden")
+      .style("background-color", "dodgerblue")
+    
+    Promise.all([countries, education]).then(([us, data]) => {
+      const getCounty = county => data.find(x => x.fips === county.id);
+      const getEducation = county => getCounty(county).bachelorsOrHigher;
+      svg.append("g")
+         .selectAll("path")
+         .data(topojson.feature(us, us.objects.counties).features) 
+         .enter()
+         .append("path")
+         .attr("class", "county")
+         .attr("data-fips", d => d.id)
+         .attr("data-education", d => getEducation(d))
+         .attr("fill", d => colorScheme(getEducation(d) / 100))
+         .attr("d", d3.geoPath()) 
+         .on("mouseover", () => tooltip.style("visibility", "visible"))
+         .on("mousemove", d => tooltip
+           .style("top", `${d3.event.pageY-10}px`)
+           .style("left", `${d3.event.pageX+10}px`)
+           .text(`${getCounty(d).state}, ${getCounty(d).area_name}: ${getEducation(d)}%`)
+           .attr("data-education", getEducation(d))
+        )
+        .on("mouseout", () => tooltip.style("visibility", "hidden"));
+    })
+
+    const sampleData = [0.1, 0.2, 0.3, 0.4, 0.5];
+    const legendY = 700;
+    svg.append("g")
+      .attr("id", "legend")
+      .selectAll("rect")
+      .data(sampleData)
+      .enter()
+      .append("rect")
+      .attr("fill", colorScheme)
+      .attr("x", (_, i) => i * 60)
+      .attr("y", legendY)
+      .attr("height", 50)
+      .attr("width", 50)
+    svg.append("g")
+      .selectAll("text")
+      .data(sampleData)
+      .enter()
+      .append("text")
+      .attr("x", (_, i) => i * 60 + 15)
+      .attr("y", legendY + 70)
+      .text(d => d)
+    
+    svg.append("text")
+      .attr("id", "description")
+      .attr("x", 360)
+      .attr("y", legendY + 30)
+      .text("Percentage of adults age 25 and older with a bachelor's degree or higher (2010-2014)")
+  </script>
+</body>

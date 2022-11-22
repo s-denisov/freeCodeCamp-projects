@@ -1,0 +1,120 @@
+<body>
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script>
+    const tempToHue = temp => 200 - temp * 14.4;
+
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const req = new XMLHttpRequest();
+    req.open("GET", "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json", true);
+    req.send();
+    req.onload = () => {
+      const w = 1500;
+      const h = 1000;
+      const padding = 100;
+      const data_ = JSON.parse(req.responseText);
+      const data = data_.monthlyVariance.map(x => ({
+        ...x,
+        temperature: Math.round((x.variance + data_.baseTemperature) * 1000) / 1000,
+        month: x.month - 1,
+      }));
+
+      console.log(data_.monthlyVariance[0])
+      console.log(data[0])
+
+      const xScale = d3.scaleLinear()
+        .domain([1752, 2016])
+        .range([padding, w - padding]);
+      const xAxis = d3
+        .axisBottom(xScale)
+        .tickFormat(d3.format("d"));
+      
+      const yScale = d3.scaleBand(months, [padding, h - padding])
+      const yAxis = d3.axisLeft(yScale)
+
+      const svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+      svg.append("g")
+        .attr("id", "x-axis")
+        .attr("transform", `translate(0, ${h - padding})`)
+        .call(xAxis);
+
+      svg.append("g")
+        .attr("id", "y-axis")
+        .attr("transform", `translate(${padding}, 0)`)
+        .call(yAxis);
+
+      svg.append("text")
+        .attr("x", padding)
+        .attr("y", 35)
+        .style("font-size", "30px")
+        .attr("id", "title")
+        .text("Global Land-Surface Temperature")
+
+      svg.append("text")
+        .attr("x", padding)
+        .attr("y", 70)
+        .attr("id", "description")
+        .text("1753 - 2015: base temperature 8.66℃")
+
+      const tooltip = svg
+        .append("text")
+        .attr("id", "tooltip")
+        .style("position", "absolute")
+        .style("z-index", 10)
+        .style("visibility", "hidden");
+
+      const legendData = [13.888, 10.942, 9.252, 8.66];
+
+      svg.append("g")
+        .attr("id", "legend")
+        .selectAll("rect")
+        .data(legendData)
+        .enter()
+        .append("rect")
+        .attr("width", 3)
+        .attr("x", 0)
+        .attr("y", (_, i) => i * 30)
+        .attr("height", 30)
+        .attr("fill", d => `hsl(${tempToHue(d)}, 100%, 50%)`)
+
+      svg.append("g")
+        .selectAll("text")
+        .data(legendData)
+        .enter()
+        .append("text")
+        .text(d => d)
+        .attr("x", 20)
+        .attr("y", (_, i) => i * 30 + 22)
+        
+
+      svg.selectAll("rect")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("class", "cell")
+        .attr("data-month", d => d.month)
+        .attr("data-year", d => d.year)
+        .attr("data-temp", d => d.temperature)
+        .attr("height", 900 / 13)
+        .attr("width", 2)
+        .attr("x", d => xScale(d.year))
+        .attr("y", d => yScale(months[d.month]))
+        .attr("fill", d => `hsl(${tempToHue(d.temperature)}, 100%, 50%)`)
+        .on("mouseover", d => tooltip
+          .attr("x", xScale(d.year))
+          .attr("y", 90)
+          .style("visibility", "visible")
+          .text(`${months[d.month]} ${d.year}, ${d.temperature}℃`)
+          .attr("data-year", d.year)
+        )
+        .on("mouseout", () => tooltip.style("visibility", "hidden"))
+    }
+    
+  </script>
+</body>

@@ -1,0 +1,111 @@
+<body>
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script>
+    const req = new XMLHttpRequest();
+    req.open("GET", "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json", true);
+    req.send();
+    req.onload = () => {
+      const w = 900;
+      const h = 1000;
+      const padding = 100;
+
+      const specifier = "%M:%S";
+      const data = JSON
+        .parse(req.responseText)
+        .map(obj => [obj.Year, obj.Time, obj.Doping === ""]);
+      const parsedData = data.map(d => [d[0], d3.timeParse(specifier)(d[1]), d[2]]);
+
+      const xScale = d3
+        .scaleLinear()
+        .domain([1993, 2016])
+        .range([padding, w - padding]);
+      const xAxis = d3
+        .axisBottom(xScale)
+        .tickFormat(d3.format("d"));
+      
+      const yScale = d3
+        .scaleTime()
+        .domain([d3.min(parsedData.map(d => d[1])), d3.max(parsedData.map(d => d[1]))])
+        .range([padding, h - padding]);
+      const yAxis = d3
+        .axisLeft(yScale)
+        .tickFormat(d => d3.timeFormat(specifier)(d));
+
+      const svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+      svg.append("g")
+        .attr("id", "x-axis")
+        .attr("transform", `translate(0, ${h - padding})`)
+        .call(xAxis);
+
+      svg.append("g")
+        .attr("id", "y-axis")
+        .attr("transform", `translate(${padding}, 0)`)
+        .call(yAxis);
+      
+      svg.append("text")
+        .attr("x", 400)
+        .attr("y", 70)
+        .attr("id", "title")
+        .style("font-size", "16px")
+        .text("Cycling Times");
+
+      const legend = svg.append("svg")
+        .attr("id", "legend")
+        .attr("x", 600)
+        .attr("y", 150)
+
+      legend.append("rect")
+        .attr("width", 15)
+        .attr("height", 15)
+        .attr("fill", "red")
+
+      legend.append("text")
+        .text("Doping allegations")
+        .attr("x", 50)
+        .attr("y", 13)
+
+      legend.append("rect")
+        .attr("width", 15)
+        .attr("height", 15)
+        .attr("y", 30)
+        .attr("fill", "green")
+
+      legend.append("text")
+        .text("No doping allegations")
+        .attr("x", 50)
+        .attr("y", 43)
+        
+      const tooltip = svg
+        .append("text")
+        .attr("id", "tooltip")
+        .attr("x", 400)
+        .attr("y", 180)
+        .style("position", "absolute")
+        .style("visibility", "hidden");
+
+      svg.selectAll("circle")
+        .data(parsedData)
+        .enter()
+        .append("circle")
+        .attr("cx", d => xScale(d[0]))
+        .attr("cy", d => yScale(d[1]))
+        .attr("r", 5)
+        .attr("fill", d => d[2] ? "green" : "red")
+        .attr("class", "dot")
+        .attr("data-xvalue", d => d[0])
+        .attr("data-yvalue", d => d[1])
+        .on("mouseover", d => tooltip
+          .attr("data-year", d[0])
+          .style("visibility", "visible")
+          .text(`Year: ${d[0]}, Time: ${d3.timeFormat(specifier)(d[1])}`))
+        .on("mouseout", () => tooltip.style("visibility", "hidden"))
+    }
+
+  </script>
+</body>

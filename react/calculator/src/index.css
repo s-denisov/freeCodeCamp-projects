@@ -1,0 +1,14 @@
+input {
+  font-size: 30px;
+  background-color: lightgrey;
+  border-color: black;
+}
+
+#display {
+  grid-area: display;
+  font-size: 50px;
+  border-style: solid;
+  border-width: 1px;
+  background-color: lightgrey;
+  padding: 15px;
+}

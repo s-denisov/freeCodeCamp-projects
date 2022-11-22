@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <style>
+
+  #nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  body textarea {
+    font-family: "Sans Serif";
+    font-size: 15px;
+  }
+
+  #form {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+  }
+
+  #submit {
+    width: 200px;
+  }
+
+  #email {
+    width: 300px;
+  }
+
+  textarea {
+    margin: 10px 0px 10px 0px;
+  }
+
+  .card {
+    border-style: solid; 
+    margin: 10px;
+    width: 200px;
+    height: 240px;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  #price-holder {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  @media (max-width: 700px) {
+    #price-holder {
+      flex-direction: column; 
+    } 
+  }
+
+  </style>
+</head>
+
+<body>
+
+<script src="../bundle.js"></script>-->
+
+<header id="header">
+  <img id="header-img" src="https://upload.wikimedia.org/wikipedia/en/8/80/Wikipedia-logo-v2.svg" height="100px">
+  <nav id="nav-bar">
+    <a href="#about" class="nav-link">About</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </nav>
+</header>
+
+<h2 id="about">About Wikipedia</h2>
+<p>Wikipedia is a multilingual online encyclopedia, based on open collaboration through a wiki-based content editing system. It is the largest and most popular general reference work on the World Wide Web, and is one of the most popular websites ranked by Alexa as of June 2019. It features exclusively free content and no commercial ads, and is owned and supported by the Wikimedia Foundation, a non-profit organization funded primarily through donations.</p>
+<p>Wikipedia was launched on January 15, 2001, by Jimmy Wales and Larry Sanger. Sanger coined its name, as a portmanteau of wiki (the Hawai'ian word for "quick"[14]) and "encyclopedia". Initially an English-language encyclopedia, versions in other languages were quickly developed. With 5,894,816 articles, the English Wikipedia is the largest of the more than 290 Wikipedia encyclopedias. Overall, Wikipedia comprises more than 40 million articles in 301 different languages and by February 2014 it had reached 18 billion page views and nearly 500 million unique visitors per month.</p>
+<p>In 2005, Nature published a peer review comparing 42 hard science articles from Encyclopædia Britannica and Wikipedia and found that Wikipedia's level of accuracy approached that of Britannica, although critics suggested that it might not have fared so well in a similar study of a random sampling of all articles or one focused on social science or contentious social issues. The following year, Time magazine stated that the open-door policy of allowing anyone to edit had made Wikipedia the biggest and possibly the best encyclopedia in the world, and was a testament to the vision of Jimmy Wales.</p>
+<p>Wikipedia has been criticized for exhibiting systemic bias, for presenting a mixture of "truths, half truths, and some falsehoods", and for being subject to manipulation and spin in controversial topics. However, Facebook announced that by 2017 it would help readers detect fake news by suggesting links to related Wikipedia articles. YouTube announced a similar plan in 2018.</p>
+<video id="video" width="320" height="240" controls>
+  <source src="wikipedia.mp4" type="video/mp4">
+</video>
+
+<h2 id="pricing">Pricing</h2>
+<div id="price-holder">
+  <div class="card">
+    <h4>$0</h4>
+    Read Wikipedia for free, online, just like billions of other people. But you might be in trouble if you urgently need an article whilst camping, and don't have internet access.
+  </div>
+  <div class="card">
+    <h4>$100</h4>
+    Download a PDF copy of Wikipedia, and take it anywhere you go. You will realize very soon how much money you saved on data. And of course, it comes with free updates every month.
+  </div>
+  <div class="card">
+    <h4>$10 000</h4>
+    Buy a physical copy of Wikipedia, to show your friends how much of a fan you are. Remember that the real cost is much higher, as you will probably need a new garage.
+  </div>
+</div>
+
+<h2 id="contact">Contact us</h2>
+<form id="form" action="https://www.freecodecamp.com/email-submit">
+  <input id="email" type="email" placeholder="Your email" name="email" required>
+  <textarea rows="4" cols="50" placeholder="Why you are contacting us" required></textarea>
+  <input id="submit" type="submit">
+</form>
+
+<footer>
+  Source of <a href="#about">about section</a>: <a href="https://en.wikipedia.org/wiki/Wikipedia">Wikipedia</a>
+</footer>
+</body>
+</html>
